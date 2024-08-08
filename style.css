@@ -21,6 +21,15 @@ body {
     background: linear-gradient(210deg, #3b4cca 0%, #ff4535 100%);
     color : var(--white-color);
 } 
+
+.container{
+    display: flex;
+    max-width: 300px;
+    flex-direction: column;
+    gap: 50px;
+}
+
+
 .header {
     margin: 0;
     font-family: "Rammetto One", sans-serif;
@@ -68,7 +77,8 @@ button.wrong{
 
 
 #loadingContainer{
-    height: 500px;
+    height: 500;
+    display: none;
 }
 
 #loadingIcon{
@@ -77,6 +87,12 @@ button.wrong{
     position :relative;
     top:20%;
 
+}
 
-
+#points{
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    
 }
