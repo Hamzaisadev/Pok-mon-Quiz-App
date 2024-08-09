@@ -4,8 +4,8 @@ const pokemonImageElement = document.getElementById("pokemonImage");
 const optionsContainers = document.getElementById("options");
 const PointsElements = document.getElementById("pointsValue");
 const totalCount = document.getElementById("totalCount");
-const mainContainer = document.getElementById("loadingContainer");
-const loadingContainer = document.getElementById("loadingIcon");
+const mainContainer = document.getElementsByClassName("container");
+const loadingContainer = document.getElementById("loadingContainer");
 
 // 8) initialize variables
 let usedPokemonIds = [];
@@ -15,7 +15,7 @@ let showLoading = false
 
 // 2)create function to fetch one Pokemon with an id
 async function fetchPokemonById(id) {
-  showLoading = true
+  showLoading = true;
   const Response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
   const data = await Response.json();
   return data;
@@ -23,7 +23,13 @@ async function fetchPokemonById(id) {
 
 // 6) function to load question with options
 async function loadQuestionsWithOptions() {
-  if (showLoading) {}
+  if (showLoading) {
+    showLoadingWindow();
+    hidePuzzleWindow();
+  }
+
+
+
   // 7)#fetch correct answer first
   let pokemonId = getRandomPokemonId();
 
@@ -57,7 +63,14 @@ async function loadQuestionsWithOptions() {
     // 10.3) test
     console.log(options);
     console.log(optionsIds);
+    if (options.length === 4) {
+      showLoading = false ;
+    }
+  
+  
+  
   }
+
 
   shuffleArray(options);
 
@@ -75,6 +88,10 @@ async function loadQuestionsWithOptions() {
     optionsContainers.appendChild(button);
     
   });
+  if (!showLoading) {
+    hideLoadingWindow();
+    showPuzzleWindow();
+  }
 
 
   
@@ -111,7 +128,7 @@ function checkAnswer(isCorrect,event){
   setTimeout(() => {
     showLoading = true;
     loadQuestionsWithOptions();
-  },1000)
+  },800)
   
 }
 
@@ -135,4 +152,29 @@ function shuffleArray(array){
 //15.5) function to update result text and class namr
 function displayResult(result) {
   resultElement.textContent = result;
+}
+
+// 17) hide loading
+
+ function hideLoadingWindow() {
+  loadingContainer.classList.add ("hide");
+ }
+
+ //18) show loading window
+ function showLoadingWindow() {
+  mainContainer[0].classList.remove("show");
+  loadingContainer.classList.remove("hide");
+  loadingContainer.classList.add("show");
+ }
+
+// 19) show puzzle window
+function showPuzzleWindow(){
+  loadingContainer.classList.remove("show");
+  mainContainer[0].classList.remove("hide");
+  mainContainer[0].classList.add("show");
+}
+
+// 20) hide puzzle window
+function hidePuzzleWindow(){
+  mainContainer[0].classList.add("hide");
 }
